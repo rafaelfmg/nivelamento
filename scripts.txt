@@ -1,0 +1,28 @@
+create table Motorista(
+id int not null, 
+nome character varying(100), 
+n_cnh  character varying(30), 
+d_nascimento character varying(10));
+
+create table Veiculo(id int not null, 
+placa character varying(10), 
+renavam character varying (100), 
+id_motorista int not null);
+
+ALTER TABLE Motorista ADD CONSTRAINT PK_ID_MOTORISTA PRIMARY KEY (id);
+
+ALTER TABLE VEICULO ADD CONSTRAINT PK_ID_VEICULO PRIMARY KEY (id);
+
+ALTER TABLE Veiculo ADD CONSTRAINT FK_ID_Motorista FOREIGN KEY (id_motorista) REFERENCES Motorista (id);
+
+Insert into Motorista VALUES (815051, 'Julio Miguel Marcos Vinicius Moraes', '96898785114', '21/03/1958');
+Insert into Motorista VALUES (796626, 'Severino Vitor Igor Moraes', '10396807830', '23/09/1987');
+Insert into Motorista VALUES (14686, 'Alexandre Tiago Freitas', '46685660761', '15/02/1995');
+Insert into Motorista VALUES (72477, 'Bernardo Tomás Otávio Freitas', '48720789669', '09/15/1983');
+Insert into Motorista VALUES (192061, 'Lucas Manuel Bruno Lopes', '31503915908', '30/05/1978');
+
+Insert into Veiculo VALUES (3029, 'NEE-4207', '68435763520', 14686);
+Insert into Veiculo VALUES (7407, 'NEX-3655', '15024224241', 72477);
+Insert into Veiculo VALUES (1819, 'HSW-4144', '23493514650', 815051);
+Insert into Veiculo VALUES (6521, 'MUT-1171', '60753025250', 192061);
+Insert into Veiculo VALUES (2603, 'LCR-1582', '35059598029', 72477);
