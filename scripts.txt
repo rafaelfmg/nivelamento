@@ -1,3 +1,5 @@
+create database Test;
+
 create table Motorista(
 id int not null, 
 nome character varying(100), 
