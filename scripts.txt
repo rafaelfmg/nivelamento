@@ -64,3 +64,6 @@ ALTER TABLE driver RENAME COLUMN zip_code TO address;
 
 
 ALTER TABLE driver DROP COLUMN zip_code;
+
+
+ALTER TABLE driver ALTER COLUMN date_of_birth TYPE date USING date_of_birth::date;
