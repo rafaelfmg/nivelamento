@@ -1,30 +1,66 @@
-create database Test;
+create database test;
 
-create table Motorista(
-id int not null, 
-nome character varying(100), 
-n_cnh  character varying(30), 
-d_nascimento character varying(10));
 
-create table Veiculo(id int not null, 
-placa character varying(10), 
-renavam character varying (100), 
-id_motorista int not null);
+CREATE SEQUENCE driver_id_seq AS bigint START WITH 100000 INCREMENT BY 2;
 
-ALTER TABLE Motorista ADD CONSTRAINT PK_ID_MOTORISTA PRIMARY KEY (id);
 
-ALTER TABLE VEICULO ADD CONSTRAINT PK_ID_VEICULO PRIMARY KEY (id);
+create table driver(id bigint PRIMARY KEY, name character varying(100), cnh_number character varying(30), date_of_birth character varying(10));
 
-ALTER TABLE Veiculo ADD CONSTRAINT FK_ID_Motorista FOREIGN KEY (id_motorista) REFERENCES Motorista (id);
 
-Insert into Motorista VALUES (815051, 'Julio Miguel Marcos Vinicius Moraes', '96898785114', '21/03/1958');
-Insert into Motorista VALUES (796626, 'Severino Vitor Igor Moraes', '10396807830', '23/09/1987');
-Insert into Motorista VALUES (14686, 'Alexandre Tiago Freitas', '46685660761', '15/02/1995');
-Insert into Motorista VALUES (72477, 'Bernardo Tomás Otávio Freitas', '48720789669', '09/15/1983');
-Insert into Motorista VALUES (192061, 'Lucas Manuel Bruno Lopes', '31503915908', '30/05/1978');
+ALTER SEQUENCE driver_id_seq OWNED BY Driver.id;
 
-Insert into Veiculo VALUES (3029, 'NEE-4207', '68435763520', 14686);
-Insert into Veiculo VALUES (7407, 'NEX-3655', '15024224241', 72477);
-Insert into Veiculo VALUES (1819, 'HSW-4144', '23493514650', 815051);
-Insert into Veiculo VALUES (6521, 'MUT-1171', '60753025250', 192061);
-Insert into Veiculo VALUES (2603, 'LCR-1582', '35059598029', 72477);
+
+create table vehicle(id bigint PRIMARY KEY, plate character varying(10), renavam character varying (100), id_driver int not null);
+
+
+ALTER TABLE vehicle ADD CONSTRAINT FK_ID_DRIVER FOREIGN KEY (driver_id) REFERENCES driver (id) ON DELETE CASCADE;
+
+
+Insert into driver VALUES (815051, 'Julio Miguel Marcos Vinicius Moraes', '96898785114', '21/03/1958');
+Insert into driver VALUES (796626, 'Severino Vitor Igor Moraes', '10396807830', '23/09/1987');
+Insert into driver VALUES (146864, 'Alexandre Tiago Freitas', '46685660761', '15/02/1995');
+Insert into driver VALUES (143454, 'Bernardo Tomás Otávio Freitas', '48720789669', '09/15/1983');
+Insert into driver VALUES (192061, 'Lucas Manuel Bruno Lopes', '31503915908', '30/05/1978');
+
+
+Insert into vehicle VALUES (3029, 'NEE-4207', '68435763520', 14686);
+Insert into vehicle VALUES (7407, 'NEX-3655', '15024224241', 72477);
+Insert into vehicle VALUES (1819, 'HSW-4144', '23493514650', 815051);
+Insert into vehicle VALUES (6521, 'MUT-1171', '60753025250', 192061);
+Insert into vehicle VALUES (2603, 'LCR-1582', '35059598029', 72477);
+
+
+select p.id_driver, p.id as id_vehicle, plate, renavam from vehicle p JOIN driver q ON p.id_driver=q.id where q.id='192061';
+
+
+delete from driver where id = '23123';
+
+
+delete from vehicle where id = '3029';
+
+
+create or replace function insert_driver(n integer)
+returns integer as $total$
+declare
+  total INTEGER := 0 ; 
+   i INTEGER := 0 ; 
+   j INTEGER := 1 ;
+   seq driverd_id_seq;
+begin
+ LOOP 
+      EXIT WHEN total = n ; 
+      total := total + 1 ; 
+      insert into driver VALUES (nextval('driver_id_seq'), 'Lucas Miguel Lopes', '96898785114', '21/03/1958');
+   END LOOP ; 
+return total;
+end;
+$total$ language plpgsql;
+
+ALTER TABLE driver
+ADD zip_code character varying(30);
+
+
+ALTER TABLE driver RENAME COLUMN zip_code TO address;
+
+
+ALTER TABLE driver DROP COLUMN zip_code;
