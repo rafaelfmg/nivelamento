@@ -77,4 +77,26 @@ class DriverDaoJdbc: DriverDao {
             return driver
         }
     }
+
+    override fun insert(driver: Driver) {
+
+        val conn: Connection? = DB().getConnection()
+        conn!!.autoCommit = false
+
+        try {
+            st = conn.createStatement()
+
+            st!!.executeUpdate("Insert into driver VALUES ("+driver.id +", '" +driver.name +"', '" +driver.cnh_number +"', '" +driver.date_of_birth +"')")
+            conn.commit()
+        } catch (e: SQLException) {
+            try {
+                conn.rollback()
+                System.out.println("Successfully rolled back changes from the database!" +e.message)
+            }
+         catch (e1: SQLException) {
+            System.out.println("Could not rollback updates " + e1.message)
+            }
+        }
+    }
+
 }

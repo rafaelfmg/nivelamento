@@ -14,9 +14,9 @@ data class Driver (
     @Column
     var cnh_number: String,
     @Column
-    var date_of_birth: String,
-    @OneToMany(mappedBy = "driver")
-    var vehicles: List<Vehicle> = ArrayList()
+    var date_of_birth: String
+    //@OneToMany(mappedBy = "driver")
+    //var vehicles: List<Vehicle> = ArrayList()
 
 
 )
