@@ -1,11 +1,10 @@
-package main.kotlin.model.dao
+package model.dao
 
-import main.kotlin.model.dao.impl.DriverDaoJdbc
-import model.dao.DriverDao
+import model.dao.impl.DriverDaoImpl
 
 class DaoFactory {
 
     fun createDriverDao(): DriverDao {
-        return DriverDaoJdbc()
+        return DriverDaoImpl()
     }
 }

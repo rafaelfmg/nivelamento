@@ -3,17 +3,15 @@ package model.entities
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.Table
 
 @Entity
-@Table(name = "driver")
-class Vehicle (
+open class Vehicle (
     @Id
-    val id: Long,
+    val id: Long? = null,
     @Column
-    var plate: String,
+    var plate: String? = null,
     @Column
-    var renavam: String,
+    var renavam: String? = null,
     @Column
     var id_driver: Long? = null
 )

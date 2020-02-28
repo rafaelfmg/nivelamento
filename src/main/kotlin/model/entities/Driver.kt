@@ -1,22 +1,16 @@
 package model.entities
+import java.util.*
 import javax.persistence.*
-import kotlin.collections.ArrayList
 
 @Entity
-@Table(name = "driver")
-data class Driver (
+open class Driver (
 
     @Id
-    @GeneratedValue
-    val id: Long,
+    val id: Long? = null,
     @Column
-    var name: String,
+    var name: String? = null,
     @Column
-    var cnh_number: String,
+    var cnh_number: String? = null,
     @Column
-    var date_of_birth: String
-    //@OneToMany(mappedBy = "driver")
-    //var vehicles: List<Vehicle> = ArrayList()
-
-
+    var date_of_birth: Date? = null
 )
