@@ -14,14 +14,10 @@ class DriverDaoImpl : DriverDao {
         return em.find(Driver::class.java, id)
     }
 
-    override fun findByName(name: String): Driver? {
-        val em = emf.createEntityManager()
-        return em.find(Driver::class.java, name)
-    }
-
-    override fun findByCnhNumber(cnh_number: String): Driver? {
-        val em = emf.createEntityManager()
-        return em.find(Driver::class.java, cnh_number)
+    override fun findByName(name: String): ArrayList<Driver>? {
+        return emf.createEntityManager().
+                createNativeQuery("SELECT id, name, cnh_number, date_of_birth FROM Driver WHERE name LIKE '%$name%'",
+                        Driver::class.java).resultList as ArrayList<Driver>
     }
 
     override fun insert(driver: Driver) {
@@ -37,6 +33,7 @@ class DriverDaoImpl : DriverDao {
                 e.printStackTrace()
             }
         }
+
 
     }
 }
