@@ -9,8 +9,8 @@ open class Driver (
     val id: Long? = null,
     @Column
     var name: String? = null,
-    @Column
-    var cnh_number: String? = null,
-    @Column
-    var date_of_birth: Date? = null
+    @Column(name = "cnh_number")
+    var cnhNumber: String? = null,
+    @Column(name = "date_of_birth")
+    var dateOfBirth: Date? = null
 )
