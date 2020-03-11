@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface VehicleRepository: JpaRepository<Vehicle, Long>
+interface VehicleRepository: JpaRepository<Vehicle, Long> {
+
+    fun findByIdDriver(idDriver: Long): List<Vehicle>
+}

@@ -2,6 +2,7 @@ package com.gloriadiaszup.controller
 
 import com.gloriadiaszup.api.VehicleRequest
 import com.gloriadiaszup.model.entities.Vehicle
+import com.gloriadiaszup.repository.VehicleRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import com.gloriadiaszup.service.VehicleService
@@ -11,8 +12,8 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/vehicle")
-class VehicleController (@Autowired private val vehicleService: VehicleService
-){
+class VehicleController (@Autowired private val vehicleService: VehicleService, @Autowired
+private val vehicleRepository: VehicleRepository){
 
     @GetMapping("{id}")
     fun getVehicle(@PathVariable("id") id: Long): ResponseEntity<Optional<Vehicle?>> {
@@ -43,5 +44,9 @@ class VehicleController (@Autowired private val vehicleService: VehicleService
     @PutMapping("/{id}")
     fun updateDriver(@PathVariable id: Long, @Valid @RequestBody vehicle: Vehicle): ResponseEntity<Vehicle>{
         return ResponseEntity.ok(vehicleService.update(vehicle))
+    }
+    @GetMapping("driver/{idDriver}")
+    fun findByIdDriver(@PathVariable idDriver: Long): List<Vehicle>{
+        return vehicleRepository.findByIdDriver(idDriver)
     }
 }
