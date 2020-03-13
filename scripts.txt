@@ -1,34 +1,22 @@
 create database test;
 
 
-CREATE SEQUENCE driver_id_seq AS bigint START WITH 100000 INCREMENT BY 2;
+CREATE SEQUENCE driver_id_seq AS bigint START WITH 10000 INCREMENT BY 2;
 
+
+CREATE SEQUENCE vehicle_id_seq AS bigint START WITH 100000 INCREMENT BY 10;
 
 create table driver(id bigint PRIMARY KEY, name character varying(100), cnh_number character varying(30), date_of_birth character varying(10));
 
 
-ALTER SEQUENCE driver_id_seq OWNED BY Driver.id;
+ALTER SEQUENCE driver_id_seq OWNED BY driver.id;
 
+ALTER SEQUENCE vehicle_id_seq OWNED BY vehicle.id;
 
 create table vehicle(id bigint PRIMARY KEY, plate character varying(10), renavam character varying (100), id_driver int not null);
 
 
 ALTER TABLE vehicle ADD CONSTRAINT FK_ID_DRIVER FOREIGN KEY (driver_id) REFERENCES driver (id) ON DELETE CASCADE;
-
-
-Insert into driver VALUES (815051, 'Julio Miguel Marcos Vinicius Moraes', '96898785114', '21/03/1958');
-Insert into driver VALUES (796626, 'Severino Vitor Igor Moraes', '10396807830', '23/09/1987');
-Insert into driver VALUES (146864, 'Alexandre Tiago Freitas', '46685660761', '15/02/1995');
-Insert into driver VALUES (143454, 'Bernardo Tomás Otávio Freitas', '48720789669', '09/15/1983');
-Insert into driver VALUES (192061, 'Lucas Manuel Bruno Lopes', '31503915908', '30/05/1978');
-
-
-Insert into vehicle VALUES (3029, 'NEE-4207', '68435763520', 14686);
-Insert into vehicle VALUES (7407, 'NEX-3655', '15024224241', 72477);
-Insert into vehicle VALUES (1819, 'HSW-4144', '23493514650', 815051);
-Insert into vehicle VALUES (6521, 'MUT-1171', '60753025250', 192061);
-Insert into vehicle VALUES (2603, 'LCR-1582', '35059598029', 72477);
-
 
 select p.id_driver, p.id as id_vehicle, plate, renavam from vehicle p JOIN driver q ON p.id_driver=q.id where q.id='192061';
 

@@ -7,10 +7,11 @@ data class DriverRequest (
 
     @get: NotNull
     @get: NotEmpty
-    val name: String?,
+    val name: String,
     @get: NotNull
     @get: NotEmpty
-    val cnhNumber: String?,
+    val cnhNumber: String,
     @get: NotNull
+    @NotEmpty
     val dateOfBirth: String
 )

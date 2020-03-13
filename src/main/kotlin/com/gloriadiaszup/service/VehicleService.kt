@@ -11,8 +11,7 @@ class VehicleService(private val vehicleRepository: VehicleRepository){
     fun create(vehicle: Vehicle): Vehicle{
        return vehicleRepository.save(vehicle)
     }
-
-    fun findAll(): ArrayList<Vehicle>{
+    fun findAll(): List<Vehicle>{
         return vehicleRepository.findAll() as ArrayList<Vehicle>
     }
     fun findById(id: Long): Optional<Vehicle?>{
@@ -20,9 +19,6 @@ class VehicleService(private val vehicleRepository: VehicleRepository){
     }
     fun deleteById(id: Long){
         vehicleRepository.deleteById(id)
-    }
-    fun delete(vehicle: Vehicle){
-        vehicleRepository.delete(vehicle)
     }
     fun update(vehicle: Vehicle): Vehicle{
         return vehicleRepository.save(vehicle)

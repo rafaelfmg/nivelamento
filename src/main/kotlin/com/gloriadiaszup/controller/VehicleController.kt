@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import com.gloriadiaszup.service.VehicleService
 import org.springframework.web.bind.annotation.*
+import java.time.Instant
 import java.util.*
 import javax.validation.Valid
 
@@ -17,12 +18,11 @@ private val vehicleRepository: VehicleRepository){
 
     @GetMapping("{id}")
     fun getVehicle(@PathVariable("id") id: Long): ResponseEntity<Optional<Vehicle?>> {
-        val vehicle = vehicleService.findById(id)
-        return ResponseEntity.ok().body(vehicle)
+        return ResponseEntity.ok().body(vehicleService.findById(id))
     }
 
     @GetMapping
-    fun findAll():ResponseEntity<ArrayList<Vehicle>>{
+    fun findAll():ResponseEntity<List<Vehicle>>{
         return ResponseEntity.ok().body(vehicleService.findAll())
     }
     @PostMapping
@@ -30,7 +30,9 @@ private val vehicleRepository: VehicleRepository){
         val vehicle = vehicleService.create(
                 Vehicle(plate = vehicleRequest.plate,
                         renavam = vehicleRequest.renavam,
-                        idDriver = vehicleRequest.idDriver
+                        idDriver = vehicleRequest.idDriver,
+                        createdAt = Instant.now(),
+                        updatedAt = Instant.now()
                 )
         )
         return ResponseEntity.ok().body(vehicle)
@@ -41,12 +43,12 @@ private val vehicleRepository: VehicleRepository){
         vehicleService.deleteById(id)
         return ResponseEntity.ok().build()
     }
-    @PutMapping("/{id}")
-    fun updateDriver(@PathVariable id: Long, @Valid @RequestBody vehicle: Vehicle): ResponseEntity<Vehicle>{
-        return ResponseEntity.ok(vehicleService.update(vehicle))
+    @PutMapping
+    fun updateDriver(@Valid @RequestBody vehicle: Vehicle): ResponseEntity<Vehicle>{
+        return ResponseEntity.ok().body(vehicleService.update(vehicle))
     }
     @GetMapping("driver/{idDriver}")
-    fun findByIdDriver(@PathVariable idDriver: Long): List<Vehicle>{
-        return vehicleRepository.findByIdDriver(idDriver)
+    fun findByIdDriver(@PathVariable idDriver: Long): ResponseEntity<List<Vehicle>> {
+        return ResponseEntity.ok().body(vehicleRepository.findByIdDriver(idDriver))
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import com.gloriadiaszup.service.DriverService
 import org.springframework.web.bind.annotation.*
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.*
 import javax.validation.Valid
 
@@ -21,7 +22,7 @@ class DriverController @Autowired constructor(private val driverService: DriverS
     }
 
     @GetMapping
-    fun findAll():ResponseEntity<ArrayList<Driver>>{
+    fun findAll():ResponseEntity<List<Driver>>{
         return ResponseEntity.ok().body(driverService.findAll())
     }
     @PostMapping
@@ -31,7 +32,9 @@ class DriverController @Autowired constructor(private val driverService: DriverS
         val driver = driverService.create(
                 Driver(name = driverRequest.name,
                         cnhNumber = driverRequest.cnhNumber,
-                        dateOfBirth = date
+                        dateOfBirth = date,
+                        createdAt = Instant.now(),
+                        updatedAt = Instant.now()
                 )
         )
         return ResponseEntity.ok().body(driver)
