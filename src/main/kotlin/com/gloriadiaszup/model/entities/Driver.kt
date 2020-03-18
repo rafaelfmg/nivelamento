@@ -19,5 +19,5 @@ open class Driver (
         @Column
         val createdAt: Instant? = null,
         @Column
-        val updatedAt: Instant? = null
+        var updatedAt: Instant? = null
 )

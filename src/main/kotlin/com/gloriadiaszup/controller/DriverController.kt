@@ -1,13 +1,12 @@
 package com.gloriadiaszup.controller
 
-import com.gloriadiaszup.api.DriverRequest
+import com.gloriadiaszup.model.dto.request.DriverDto
+import com.gloriadiaszup.model.dto.response.DriverResponse
 import com.gloriadiaszup.model.entities.Driver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import com.gloriadiaszup.service.DriverService
 import org.springframework.web.bind.annotation.*
-import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
 import javax.validation.Valid
 
@@ -16,37 +15,27 @@ import javax.validation.Valid
 class DriverController @Autowired constructor(private val driverService: DriverService) {
 
     @GetMapping("/{id}")
-    fun findDriverById(@PathVariable("id") id: Long): ResponseEntity<Optional<Driver>>{
+    fun findDriverById(@PathVariable("id") id: Long): ResponseEntity<DriverResponse> {
         val driver = driverService.findById(id)
-        return ResponseEntity.ok().body(driver)
+        return ResponseEntity.ok().body(DriverResponse().toDto(driver.get()))
     }
 
     @GetMapping
-    fun findAll():ResponseEntity<List<Driver>>{
-        return ResponseEntity.ok().body(driverService.findAll())
+    fun findAll(): ResponseEntity<ArrayList<DriverResponse>> {
+        return ResponseEntity.ok().body(DriverResponse().toDtoList(driverService.findAll()))
     }
     @PostMapping
-    fun createDriver(@Valid @RequestBody driverRequest: DriverRequest): ResponseEntity<Driver>{
-        val format = SimpleDateFormat("dd/MM/yyyy")
-        val date = format.parse(driverRequest.dateOfBirth)
-        val driver = driverService.create(
-                Driver(name = driverRequest.name,
-                        cnhNumber = driverRequest.cnhNumber,
-                        dateOfBirth = date,
-                        createdAt = Instant.now(),
-                        updatedAt = Instant.now()
-                )
-        )
-        return ResponseEntity.ok().body(driver)
+    fun createDriver(@Valid @RequestBody driverDto: DriverDto): ResponseEntity<DriverResponse> {
+        val driver = driverService.create(driverDto.toDriver())
+        return ResponseEntity.ok().body(DriverResponse().toDto(driver))
     }
 
     @DeleteMapping("/{id}")
-    fun deleteDriver(@PathVariable id: Long): ResponseEntity<Driver>{
-        driverService.deleteById(id)
-        return ResponseEntity.ok().build()
+    fun deleteDriver(@PathVariable id: Long):ResponseEntity<Unit>{
+        return ResponseEntity.ok().body(driverService.deleteById(id))
     }
     @PutMapping("/{id}")
-    fun updateDriver(@PathVariable id: Long, @Valid @RequestBody driver: Driver): ResponseEntity<Driver>{
-        return ResponseEntity.ok(driverService.update(driver))
+    fun updateDriver(@PathVariable id: Long, @Valid @RequestBody driver: Driver): ResponseEntity<DriverResponse>{
+        return ResponseEntity.ok(DriverResponse().toDto(driverService.update(driver)))
     }
 }

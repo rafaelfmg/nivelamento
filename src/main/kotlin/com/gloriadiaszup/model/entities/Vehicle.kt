@@ -17,5 +17,5 @@ open class Vehicle (
         @Column
         val createdAt: Instant? = null,
         @Column
-        val updatedAt: Instant? = null
+        var updatedAt: Instant? = null
 )

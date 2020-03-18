@@ -1,15 +1,15 @@
 package com.gloriadiaszup.controller
 
-import com.gloriadiaszup.api.VehicleRequest
+import com.gloriadiaszup.model.dto.request.VehicleDto
+import com.gloriadiaszup.model.dto.response.VehicleResponse
 import com.gloriadiaszup.model.entities.Vehicle
 import com.gloriadiaszup.repository.VehicleRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import com.gloriadiaszup.service.VehicleService
 import org.springframework.web.bind.annotation.*
-import java.time.Instant
-import java.util.*
 import javax.validation.Valid
+import kotlin.collections.ArrayList
 
 @RestController
 @RequestMapping("/vehicle")
@@ -17,38 +17,30 @@ class VehicleController (@Autowired private val vehicleService: VehicleService, 
 private val vehicleRepository: VehicleRepository){
 
     @GetMapping("{id}")
-    fun getVehicle(@PathVariable("id") id: Long): ResponseEntity<Optional<Vehicle?>> {
-        return ResponseEntity.ok().body(vehicleService.findById(id))
+    fun getVehicle(@PathVariable("id") id: Long): ResponseEntity<VehicleResponse> {
+        return ResponseEntity.ok().body(VehicleResponse().toDto(vehicleService.findById(id).get()))
     }
 
     @GetMapping
-    fun findAll():ResponseEntity<List<Vehicle>>{
-        return ResponseEntity.ok().body(vehicleService.findAll())
+    fun findAll(): ResponseEntity<ArrayList<VehicleResponse>> {
+        return ResponseEntity.ok().body(VehicleResponse().toDtoList(vehicleService.findAll()))
     }
     @PostMapping
-    fun createVehicle(@Valid @RequestBody vehicleRequest: VehicleRequest): ResponseEntity<Vehicle>{
-        val vehicle = vehicleService.create(
-                Vehicle(plate = vehicleRequest.plate,
-                        renavam = vehicleRequest.renavam,
-                        idDriver = vehicleRequest.idDriver,
-                        createdAt = Instant.now(),
-                        updatedAt = Instant.now()
-                )
-        )
-        return ResponseEntity.ok().body(vehicle)
+    fun createVehicle(@Valid @RequestBody vehicleDto: VehicleDto): ResponseEntity<VehicleResponse>{
+        val vehicle = vehicleService.create(vehicleDto.toVehicle())
+        return ResponseEntity.ok().body(VehicleResponse().toDto(vehicle))
     }
 
     @DeleteMapping("/{id}")
-    fun deleteVehicle(@PathVariable id: Long): ResponseEntity<Vehicle>{
-        vehicleService.deleteById(id)
-        return ResponseEntity.ok().build()
+    fun deleteVehicle(@PathVariable id: Long): ResponseEntity<Unit>{
+        return ResponseEntity.ok().body(vehicleService.deleteById(id))
     }
     @PutMapping
-    fun updateDriver(@Valid @RequestBody vehicle: Vehicle): ResponseEntity<Vehicle>{
-        return ResponseEntity.ok().body(vehicleService.update(vehicle))
+    fun updateDriver(@Valid @RequestBody vehicle: Vehicle): ResponseEntity<VehicleResponse> {
+        return ResponseEntity.ok().body(VehicleResponse().toDto(vehicleService.update(vehicle)))
     }
     @GetMapping("driver/{idDriver}")
-    fun findByIdDriver(@PathVariable idDriver: Long): ResponseEntity<List<Vehicle>> {
-        return ResponseEntity.ok().body(vehicleRepository.findByIdDriver(idDriver))
+    fun findByIdDriver(@PathVariable idDriver: Long): ResponseEntity<ArrayList<VehicleResponse>> {
+        return ResponseEntity.ok().body(VehicleResponse().toDtoList(vehicleRepository.findByIdDriver(idDriver)))
     }
 }
