@@ -33,7 +33,6 @@ proguard/
 .gradle/
 gradle/
 build/
-bin/
 out/
 gradlew.bat
 
