@@ -1,32 +1,36 @@
 package com.gloriadiaszup.model.entities
 
-import java.time.Instant
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table
+@EntityListeners(AuditingEntityListener::class)
 class Schedule (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long? = null,
+    val id: Long,
     @Column
-    val idDriver: Long? = null,
+    val idDriver: Long,
     @Column
-    val idVehicle: Long? = null,
+    val idVehicle: Long,
     @Column
-    val idProduct: Long? = null,
+    val idProduct: Long,
     @Column
-    val idTerminal: Long? = null,
+    val idTerminal: Long,
     @Column
-    val cargoWeight: Int? = null,
+    val cargoWeight: Int,
     @Column
-    val totalValue: Long? = null,
+    val totalValue: Long,
     @Column
-    val scheduledAt: LocalDateTime? = null,
-    @Column
-    val createdAt: Instant? = null,
-    @Column
-    var updatedAt: Instant? = null
+    val scheduledAt: LocalDateTime?,
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    var createdAt: LocalDateTime?,
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    var updatedAt: LocalDateTime? = null
 )

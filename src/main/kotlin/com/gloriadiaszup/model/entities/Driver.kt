@@ -1,23 +1,29 @@
 package com.gloriadiaszup.model.entities
 
-import java.time.Instant
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 open class Driver (
 
         @Id
         @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "driver_id_seq")
-        val id: Long? = null,
+        val id: Long,
         @Column
-        var name: String? = null,
+        var name: String,
         @Column(name = "cnh_number")
-        var cnhNumber: String? = null,
+        var cnhNumber: String,
         @Column(name = "date_of_birth")
-        var dateOfBirth: Date? = null,
-        @Column
-        val createdAt: Instant? = null,
-        @Column
-        var updatedAt: Instant? = null
+        var dateOfBirth: Date,
+        @CreatedDate
+        @Column(name = "created_at", nullable = false, updatable = false)
+        var createdAt: LocalDateTime?,
+        @LastModifiedDate
+        @Column(name = "updated_at", nullable = false)
+        var updatedAt: LocalDateTime? = null
 )

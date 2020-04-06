@@ -1,13 +1,10 @@
 package com.gloriadiaszup.controller
 
-import com.gloriadiaszup.model.dto.request.DriverDto
-import com.gloriadiaszup.model.dto.response.DriverResponse
-import com.gloriadiaszup.model.entities.Driver
+import com.gloriadiaszup.dto.DriverDto
+import com.gloriadiaszup.dto.DriverListDto
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
 import com.gloriadiaszup.service.DriverService
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -15,27 +12,25 @@ import javax.validation.Valid
 class DriverController @Autowired constructor(private val driverService: DriverService) {
 
     @GetMapping("/{id}")
-    fun findDriverById(@PathVariable("id") id: Long): ResponseEntity<DriverResponse> {
-        val driver = driverService.findById(id)
-        return ResponseEntity.ok().body(DriverResponse().toDto(driver.get()))
+    fun findDriverById(@PathVariable("id") id: Long): DriverDto {
+        return DriverDto((driverService.findById(id).get()))
     }
 
     @GetMapping
-    fun findAll(): ResponseEntity<ArrayList<DriverResponse>> {
-        return ResponseEntity.ok().body(DriverResponse().toDtoList(driverService.findAll()))
+    fun findAll(): DriverListDto {
+        return DriverListDto().get(driverService.findAll())
     }
     @PostMapping
-    fun createDriver(@Valid @RequestBody driverDto: DriverDto): ResponseEntity<DriverResponse> {
-        val driver = driverService.create(driverDto.toDriver())
-        return ResponseEntity.ok().body(DriverResponse().toDto(driver))
+    fun createDriver(@Valid @RequestBody driverDto: DriverDto): DriverDto {
+        return DriverDto(driverService.create(driverDto.toObject()))
     }
 
     @DeleteMapping("/{id}")
-    fun deleteDriver(@PathVariable id: Long):ResponseEntity<Unit>{
-        return ResponseEntity.ok().body(driverService.deleteById(id))
+    fun deleteDriver(@PathVariable id: Long){
+        return driverService.deleteById(id)
     }
-    @PutMapping("/{id}")
-    fun updateDriver(@PathVariable id: Long, @Valid @RequestBody driver: Driver): ResponseEntity<DriverResponse>{
-        return ResponseEntity.ok(DriverResponse().toDto(driverService.update(driver)))
+    @PutMapping
+    fun updateDriver(@Valid @RequestBody driver: DriverDto): DriverDto{
+        return DriverDto(driverService.update(driver.toObject()))
     }
 }

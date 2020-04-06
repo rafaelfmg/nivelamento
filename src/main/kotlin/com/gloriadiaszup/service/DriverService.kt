@@ -3,7 +3,6 @@ package com.gloriadiaszup.service
 import com.gloriadiaszup.model.entities.Driver
 import org.springframework.stereotype.Service
 import com.gloriadiaszup.repository.DriverRepository
-import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -13,7 +12,6 @@ class DriverService(private val driverRepository: DriverRepository) {
     fun create(driver: Driver): Driver{
         return driverRepository.save(driver)
     }
-
     fun findAll(): List<Driver>{
         return driverRepository.findAll() as ArrayList<Driver>
     }
@@ -24,7 +22,7 @@ class DriverService(private val driverRepository: DriverRepository) {
         driverRepository.deleteById(id)
     }
     fun update(driver: Driver): Driver{
-        driver.updatedAt = Instant.now()
+        driver.createdAt = findById(driver.id).get().createdAt
         return driverRepository.save(driver)
     }
 }

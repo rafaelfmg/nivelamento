@@ -3,7 +3,7 @@ package com.gloriadiaszup.service
 import com.gloriadiaszup.model.entities.Vehicle
 import org.springframework.stereotype.Service
 import com.gloriadiaszup.repository.VehicleRepository
-import java.time.Instant
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
@@ -22,7 +22,7 @@ class VehicleService(private val vehicleRepository: VehicleRepository){
         vehicleRepository.deleteById(id)
     }
     fun update(vehicle: Vehicle): Vehicle{
-        vehicle.updatedAt = Instant.now()
+        vehicle.createdAt = findById(vehicle.id).get().createdAt
         return vehicleRepository.save(vehicle)
     }
 }
