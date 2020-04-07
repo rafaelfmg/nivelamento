@@ -1,4 +1,4 @@
-package com.gloriadiaszup.model.entities
+package com.gloriadiaszup.model.entity
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -8,15 +8,16 @@ import javax.persistence.*
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-open class Product(
-
+open class Vehicle (
         @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val id: Long,
+        @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "vehicle_id_seq")
+         val id: Long,
         @Column
-        val name: String,
+         var plate: String,
         @Column
-        val value: String,
+        var renavam: String,
+        @Column(name = "id_driver")
+         var idDriver: Long,
         @CreatedDate
         @Column(name = "created_at", nullable = false, updatable = false)
         var createdAt: LocalDateTime?,

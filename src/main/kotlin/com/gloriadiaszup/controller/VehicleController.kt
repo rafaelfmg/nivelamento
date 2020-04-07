@@ -1,8 +1,8 @@
 package com.gloriadiaszup.controller
 
-import com.gloriadiaszup.dto.VehicleDto
-import com.gloriadiaszup.dto.VehicleListDto
-import com.gloriadiaszup.model.entities.Vehicle
+import com.gloriadiaszup.model.dto.VehicleDto
+import com.gloriadiaszup.model.dto.VehicleListDto
+import com.gloriadiaszup.model.entity.Vehicle
 import com.gloriadiaszup.repository.VehicleRepository
 import org.springframework.beans.factory.annotation.Autowired
 import com.gloriadiaszup.service.VehicleService
@@ -13,7 +13,7 @@ import javax.validation.Valid
 @RequestMapping("/vehicle")
 class VehicleController (@Autowired private val vehicleService: VehicleService, @Autowired
 private val vehicleRepository: VehicleRepository){
-
+/*
     @GetMapping("{id}")
     fun getVehicle(@PathVariable("id") id: Long): VehicleDto {
         return VehicleDto((vehicleService.findById(id).get()))
@@ -24,7 +24,7 @@ private val vehicleRepository: VehicleRepository){
         return VehicleListDto().get(vehicleService.findAll())
     }
     @PostMapping
-    fun createVehicle(@Valid @RequestBody vehicleDto: VehicleDto): VehicleDto{
+    fun createVehicle(@Valid @RequestBody vehicleDto: VehicleDto): VehicleDto {
         return VehicleDto(vehicleService.create(vehicleDto.toObject(vehicleDto)))
     }
 
@@ -40,4 +40,4 @@ private val vehicleRepository: VehicleRepository){
     fun findByIdDriver(@PathVariable idDriver: Long): VehicleListDto {
         return VehicleListDto().get(vehicleRepository.findByIdDriver(idDriver))
     }
-}
+*/}

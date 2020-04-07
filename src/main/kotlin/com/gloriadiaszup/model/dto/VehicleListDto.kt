@@ -1,10 +1,10 @@
-package com.gloriadiaszup.dto
+package com.gloriadiaszup.model.dto
 
-import com.gloriadiaszup.model.entities.Vehicle
+import com.gloriadiaszup.model.entity.Vehicle
 import java.util.ArrayList
 
 class VehicleListDto(
-        val vehicleListDto: List<VehicleDto> = ArrayList()
+ /*       val vehicleListDto: List<VehicleDto> = ArrayList()
 ) {
 
     fun get(vehicles: List<Vehicle>): VehicleListDto {
@@ -14,4 +14,5 @@ class VehicleListDto(
         }
         return VehicleListDto(listDto)
     }
-}
+*/
+)

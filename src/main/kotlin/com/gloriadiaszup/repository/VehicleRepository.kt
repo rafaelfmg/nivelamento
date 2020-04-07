@@ -1,6 +1,6 @@
 package com.gloriadiaszup.repository
 
-import com.gloriadiaszup.model.entities.Vehicle
+import com.gloriadiaszup.model.entity.Vehicle
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional

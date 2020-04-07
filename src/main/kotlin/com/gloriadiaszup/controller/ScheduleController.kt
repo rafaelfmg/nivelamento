@@ -1,7 +1,7 @@
 package com.gloriadiaszup.controller
 
-import com.gloriadiaszup.dto.ScheduleDto
-import com.gloriadiaszup.dto.ScheduleListDto
+import com.gloriadiaszup.model.dto.ScheduleDto
+import com.gloriadiaszup.model.dto.ScheduleListDto
 import com.gloriadiaszup.service.ScheduleService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -10,9 +10,9 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/schedule")
 class ScheduleController(@Autowired private val scheduleService: ScheduleService) {
-
+/*
     @GetMapping
-    fun findAll(): ScheduleListDto{
+    fun findAll(): ScheduleListDto {
         return ScheduleListDto().get(scheduleService.findAll())
     }
     @GetMapping("/{id}")
@@ -32,4 +32,5 @@ class ScheduleController(@Autowired private val scheduleService: ScheduleService
         return scheduleService.deleteById(id)
     }
 
+}*/
 }
