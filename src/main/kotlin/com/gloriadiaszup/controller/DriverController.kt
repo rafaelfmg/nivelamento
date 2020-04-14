@@ -1,8 +1,6 @@
 package com.gloriadiaszup.controller
 
 import com.gloriadiaszup.model.dto.DriverDto
-import com.gloriadiaszup.model.dto.DriverListDto
-import com.gloriadiaszup.model.entity.Driver
 import com.gloriadiaszup.model.entity.mappers.DriverMapper
 import org.springframework.beans.factory.annotation.Autowired
 import com.gloriadiaszup.service.DriverService
@@ -13,19 +11,21 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/driver")
 class DriverController @Autowired constructor(private val driverService: DriverService) {
-    /*
+
+    private val driverMapper = Mappers.getMapper(DriverMapper::class.java)
+
     @GetMapping("/{id}")
     fun findDriverById(@PathVariable("id") id: Long): DriverDto {
-        return DriverDto((driverService.findById(id).get()))
+        return driverMapper.toDto(driverService.findById(id).get())
     }
 
     @GetMapping
-    fun findAll(): DriverListDto {
-        return DriverListDto().get(driverService.findAll())
+    fun findAll(): List<DriverDto> {
+       return driverMapper.toListDto(driverService.findAll())
     }
     @PostMapping
     fun createDriver(@Valid @RequestBody driverDto: DriverDto): DriverDto {
-        return DriverDto(driverService.create(driverDto.toObject()))
+        return driverMapper.toDto(driverService.create(driverMapper.toModel(driverDto)))
     }
 
     @DeleteMapping("/{id}")
@@ -33,13 +33,7 @@ class DriverController @Autowired constructor(private val driverService: DriverS
         return driverService.deleteById(id)
     }
     @PutMapping
-    fun updateDriver(@Valid @RequestBody driver: DriverDto): DriverDto {
-        return DriverDto(driverService.update(driver.toObject()))
-    }
-*/
-    @PostMapping("/test")
-    fun test(@Valid @RequestBody driverDto: DriverDto): Driver{
-        val convert = Mappers.getMapper(DriverMapper::class.java)
-        return convert.toModel(driverDto)
+    fun updateDriver(@Valid @RequestBody driverDto: DriverDto): DriverDto {
+        return driverMapper.toDto(driverService.update(driverMapper.toModel(driverDto)))
     }
 }

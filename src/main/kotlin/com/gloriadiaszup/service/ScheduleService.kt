@@ -18,7 +18,7 @@ class ScheduleService(private val scheduleRepository: ScheduleRepository) {
         return scheduleRepository.findAll()
     }
     fun update(schedule: Schedule): Schedule {
-        schedule.createdAt = findById(schedule.id).get().createdAt
+        schedule.createdAt = scheduleRepository.findById(schedule.id).get().createdAt
         return scheduleRepository.save(schedule)
     }
     fun deleteById(id: Long){

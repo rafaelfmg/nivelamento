@@ -11,16 +11,16 @@ import javax.persistence.*
 open class Vehicle (
         @Id
         @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "vehicle_id_seq")
-         val id: Long,
+         var id: Long? = null,
         @Column
-         var plate: String,
+         var plate: String? = null,
         @Column
-        var renavam: String,
+        var renavam: String? = null,
         @Column(name = "id_driver")
-         var idDriver: Long,
+         var idDriver: Long? = null,
         @CreatedDate
         @Column(name = "created_at", nullable = false, updatable = false)
-        var createdAt: LocalDateTime?,
+        var createdAt: LocalDateTime? = null,
         @LastModifiedDate
         @Column(name = "updated_at", nullable = false)
         var updatedAt: LocalDateTime? = null

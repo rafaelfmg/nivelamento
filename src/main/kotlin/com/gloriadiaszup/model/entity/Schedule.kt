@@ -8,28 +8,28 @@ import javax.persistence.*
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-class Schedule (
+open class Schedule (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long,
+    var id: Long? = null,
     @Column
-    val idDriver: Long,
+    var idDriver: Long? = null,
     @Column
-    val idVehicle: Long,
+    var idVehicle: Long? = null,
     @Column
-    val idProduct: Long,
+    var idProduct: Long? = null,
     @Column
-    val idTerminal: Long,
+    var idTerminal: Long? = null,
     @Column
-    val cargoWeight: Int,
+    var cargoWeight: Int? = null,
     @Column
-    val totalValue: Long,
+    var totalValue: Long? = null,
     @Column
-    val scheduledAt: LocalDateTime?,
+    var scheduledAt: LocalDateTime? = null,
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    var createdAt: LocalDateTime?,
+    var createdAt: LocalDateTime? = null,
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     var updatedAt: LocalDateTime? = null

@@ -8,15 +8,15 @@ import javax.persistence.*
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-open class Product(
+class Product(
 
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val id: Long,
+        var id: Long,
         @Column
-        val name: String,
+        var name: String,
         @Column
-        val value: String,
+        var value: String,
         @CreatedDate
         @Column(name = "created_at", nullable = false, updatable = false)
         var createdAt: LocalDateTime?,

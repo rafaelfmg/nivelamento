@@ -7,13 +7,13 @@ import javax.persistence.*
 
 @Entity
 @Table
-open class Terminal (
+class Terminal (
 
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val id: Long,
+        var id: Long,
         @Column
-        val name: String,
+        var name: String,
         @CreatedDate
         @Column(name = "created_at", nullable = false, updatable = false)
         var createdAt: LocalDateTime?,

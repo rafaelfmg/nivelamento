@@ -22,7 +22,7 @@ class DriverService(private val driverRepository: DriverRepository) {
         driverRepository.deleteById(id)
     }
     fun update(driver: Driver): Driver {
-        driver.createdAt = driver.id?.let { findById(it).get().createdAt }
+        driver.createdAt = driverRepository.findById(driver.id).get().createdAt
         return driverRepository.save(driver)
     }
 }

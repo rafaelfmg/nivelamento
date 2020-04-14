@@ -9,23 +9,21 @@ import javax.persistence.*
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-open class Driver (
+class Driver (
 
         @Id
         @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "driver_id_seq")
-        val id: Long?,
+        var id: Long? = null,
         @Column
-        var name: String?,
+        var name: String? = null,
         @Column(name = "cnh_number")
-        var cnhNumber: String?,
-        @Column(name = "date_of_birth")
-        var dateOfBirth: Date?,
+        var cnhNumber: String? = null,
+        @Column(name = "date_of_birth", columnDefinition = "date")
+        var dateOfBirth: Date? = null,
         @CreatedDate
         @Column(name = "created_at", nullable = false, updatable = false)
-        var createdAt: LocalDateTime?,
+        var createdAt: LocalDateTime? = null,
         @LastModifiedDate
         @Column(name = "updated_at", nullable = false)
         var updatedAt: LocalDateTime? = null
-){
-        constructor(): this(null, null, null,  null, null, null)
-}
+)

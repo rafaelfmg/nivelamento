@@ -21,7 +21,7 @@ class VehicleService(private val vehicleRepository: VehicleRepository){
         vehicleRepository.deleteById(id)
     }
     fun update(vehicle: Vehicle): Vehicle {
-        vehicle.createdAt = findById(vehicle.id).get().createdAt
+        vehicle.createdAt = vehicleRepository.findById(vehicle.id).get().createdAt
         return vehicleRepository.save(vehicle)
     }
 }
